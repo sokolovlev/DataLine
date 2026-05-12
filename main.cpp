@@ -2,7 +2,8 @@
 #include "ManagerClass.h"
 #include "cstdint"
 #include <istream>
-#include "ParametersClass.h"
+#include "ConfigClass.h"
+
 
 int main()
 {
@@ -27,7 +28,6 @@ int main()
         exit(1);
     }
 
-    ParametersClass parameters(tokens[0],tokens[1],tokens[2],tokens[3],tokens[4]);
 
     std::string inputDir = "input";
     std::string outputDir = "output";
@@ -41,6 +41,8 @@ int main()
 
     std::cout << "outpute file name";
     std::cin >> outputName;
+
+    ConfigClass parameters(tokens,inputName,outputName);
 
     ManagerClass manager(inputDir,outputDir, techDir, &parameters,inputName,outputName);
     manager.run();

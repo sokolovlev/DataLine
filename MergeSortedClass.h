@@ -12,24 +12,29 @@
 
 #include <vector>
 #include <queue>
-#include "ParametersClass.h"
+#include "ConfigClass.h"
+
+namespace fs = std::filesystem;
+using cfg = ConfigClass;
 
 class MergeSortedClass
 {
 private:
-    std::filesystem::path inputDir;
-    std::filesystem::path outputDir;
+    fs::path inDir;
+    fs::path outDir;
 
-    std::filesystem::path inName;
-    std::filesystem::path outName;
+    fs::path inName;
+    fs::path outName;
 
-    uint64_t bufferLen;
+    uint64_t bufSz;
     bool success;
+
     inline static constexpr std::string_view outputName = "sorted_result.csv";
     inline static constexpr std::string_view inputIsEmpty = "Input directory is empty";
     inline static constexpr std::string_view createOutputFailed = "error make outputFile\n";
 public:
-    MergeSortedClass(const std::filesystem::path& inputDirectory, const std::filesystem::path& outputDirectory, ParametersClass* parametersData, const std::filesystem::path& inName, const std::filesystem::path& outName);
+    MergeSortedClass(const fs::path& inputDir, const fs::path& outputDir,
+        const cfg* config, const fs::path& inputName, const fs::path& outputName);
     ~MergeSortedClass();
 
     void run();

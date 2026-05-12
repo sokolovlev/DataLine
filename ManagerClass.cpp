@@ -4,42 +4,45 @@
 
 #include "ManagerClass.h"
 #include "SeparatorClass.h"
-#include "ParametersClass.h"
+#include "ConfigClass.h"
 
-ManagerClass::ManagerClass(const std::filesystem::path& inputDirectory, const std::filesystem::path& outputDirectory,const std::filesystem::path& techDirectory, ParametersClass* parametersData, const std::filesystem::path& inputName, const std::filesystem::path& outputName)
+
+ManagerClass::ManagerClass(const fs::path& inputDir, const fs::path& outputDir,const fs::path& techDir, ps* parametersData, const fs::path& inputName, const fs::path& outputName)
 {
-    constexpr int minRam = 30 * 1024 * 1024;
-    constexpr int midRam = 40 * 1024 * 1024;
-    constexpr int heightRam = 50 * 1024 * 1024;
-    constexpr int bigRam = 70 * 1024 * 1024;
+    constexpr int min = 30 * 1024 * 1024;
+    constexpr int mid = 40 * 1024 * 1024;
 
-    inputDir = static_cast<std::filesystem::path>(inputDirectory);
-    techDir = static_cast<std::filesystem::path>(techDirectory);
-    outputDir = static_cast<std::filesystem::path>(outputDirectory);
+    constexpr int high = 50 * 1024 * 1024;
+    constexpr int extrm = 70 * 1024 * 1024;
 
-    inName = static_cast<std::filesystem::path>(inputName);
-    outName = static_cast<std::filesystem::path>(outputName);
+    constexpr size_t sizeULL = sizeof(uint64_t);
 
-    ramLimit = parametersData -> getRamLimit() * 1024 * 1024;
-    std::cout << ramLimit << std::endl;
-    setLimit(ramLimit);
+    inDir = inputDir;
+    outDir = outputDir;
+    tDir = techDir;
 
-    if (ramLimit < minRam)
+    inName = inputName;
+    outName = outputName;
+
+    ramLmt = parametersData -> getRamLmt() * 1024 * 1024;
+    setLimit(ramLmt);
+
+    if (ramLmt < min)
     {
         std::cout << ramTooLow << std::endl;
         exit(1);
     }
-    else if (ramLimit < midRam)
-        bufferLen = 0.26 * ramLimit  / sizeof(uint64_t);
-    else if (ramLimit < heightRam)
-        bufferLen = 0.45 * ramLimit  / sizeof(uint64_t);
-    else if (ramLimit < bigRam)
-        bufferLen = 0.56 * ramLimit  / sizeof(uint64_t);
+    else if (ramLmt < mid)
+        bufSz = 0.26 * ramLmt  / sizeULL;
+    else if (ramLmt < high)
+        bufSz = 0.45 * ramLmt  / sizeULL;
+    else if (ramLmt < extrm)
+        bufSz = 0.56 * ramLmt  / sizeULL;
     else
-        bufferLen = 0.68 * ramLimit  / sizeof(uint64_t);
+        bufSz = 0.68 * ramLmt  / sizeULL;
 
-    parametersData -> setBufferLen(bufferLen);
-    parametersData -> getBufferLen();
+    parametersData -> setBufSz(bufSz);
+    parametersData -> getBufSz();
 }
 
 uint64_t ManagerClass::getLen() const  // number of data (without delimiters and '\n' symbols)
@@ -47,16 +50,16 @@ uint64_t ManagerClass::getLen() const  // number of data (without delimiters and
     constexpr char delimiter = ',';
     constexpr size_t unitLen = sizeof(uint64_t);
 
-    std::filesystem::path inputFilePath = inputDir / "source.csv";
-    std::ifstream file(inputFilePath);
+    fs::path inPath = inDir / "source.csv";
+    std::ifstream file(inPath);
 
     if (!file.is_open())
     {
-        std::cerr << fileOpenError << inputFilePath << std::endl;
+        std::cerr << fileOpenError << inPath << std::endl;
         exit(1);
     }
 
-    uint64_t count = 0;
+    uint64_t cnt = 0;
     uint64_t len = 0;
     char ch;
 
@@ -70,23 +73,23 @@ uint64_t ManagerClass::getLen() const  // number of data (without delimiters and
                 exit(1);
             }
             len = 0;
-            count++;
+            cnt++;
         }
         else if (ch != '\n')
             len++;
     }
 
-    count++;
-    return count;
+    cnt++;
+    return cnt;
 }
 
 bool ManagerClass::isEnoughMemory() const
 {
-    uint64_t value = ((ramLimit / 1024) - 3072) / (8.3);   // max value of files
-    uint64_t FileLen = getLen();
-    uint64_t maxBufferLen = ceil(FileLen / value);
+    uint64_t value = ((ramLmt / 1024) - 3072) / (8.3);   // max value of files
+    uint64_t fileSz = getLen();
+    uint64_t maxBufSz = ceil(fileSz / value);
 
-    if ((FileLen / maxBufferLen) < value)
+    if ((fileSz / maxBufSz) < value)
         return true;
     else
         return false;
@@ -94,12 +97,12 @@ bool ManagerClass::isEnoughMemory() const
 
 void ManagerClass::run()
 {
-    SeparatorClass separator(inputDir,techDir,parameters,bufferLen,inName,outName);
-    separator.controller();
+    SeparatorClass separator(inDir,tDir,parameters,bufSz,inName,outName);
+    separator.ctrl();
 
     if (separator.is_success())
     {
-        MergeSortedClass merge(techDir,outputDir,parameters,inName,outName);
+        MergeSortedClass merge(tDir,outDir,parameters,inName,outName);
         merge.run();
 
         if (merge.is_success())

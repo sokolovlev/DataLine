@@ -4,11 +4,12 @@
 
 #include "MergeSortedClass.h"
 
-MergeSortedClass::MergeSortedClass(const std::filesystem::path& inputDirectory, const std::filesystem::path& outputDirectory, ParametersClass* parametersData, const std::filesystem::path& inputName, const std::filesystem::path& outputName)
+MergeSortedClass::MergeSortedClass(const fs::path& inputDir, const fs::path& outputDir,
+    const cfg* config, const fs::path& inputName, const fs::path& outputName)
 {
-    inputDir = inputDirectory;
-    outputDir = outputDirectory;
-    bufferLen = parametersData -> getBufferLen();
+    inDir = inputDir;
+    outDir = outputDir;
+    bufSz = config -> getBufSz();
 
     inName = inputName;
     outName = outputName;
@@ -17,24 +18,25 @@ MergeSortedClass::MergeSortedClass(const std::filesystem::path& inputDirectory, 
 
 MergeSortedClass::~MergeSortedClass()
 {
-    if (std::filesystem::exists(inputDir))
+    if (fs::exists(inDir))
     {
-        for (const auto& entry : std::filesystem::directory_iterator(inputDir))
-            if (std::filesystem::is_regular_file(entry.path()))
-                std::filesystem::remove(entry.path());
+        using dirIter = std::filesystem::directory_iterator;
+        for (const auto& entry : dirIter(inDir))
+            if (fs::is_regular_file(entry.path()))
+                fs::remove(entry.path());
     }
 }
 
 void MergeSortedClass::run()
 {
-    std::vector<std::ifstream> inputFiles;
+    std::vector<std::ifstream> inFiles;
     uint64_t num = 0;
 
     while (true)
     {
-        std::filesystem::path sortedName = "SortedPartN" + std::to_string(num++) + ".csv";
-        std::filesystem::path inputPath = inputDir / sortedName;
-        std::ifstream file(inputPath);
+        fs::path sortedN = "SortedPartN" + std::to_string(num++) + ".csv";
+        fs::path inPath = inDir / sortedN;
+        std::ifstream file(inPath);
 
         if (file.is_open())
         {
@@ -43,16 +45,16 @@ void MergeSortedClass::run()
             if (file.eof())
                 continue;
             else
-                inputFiles.push_back(std::move(file));
+                inFiles.push_back(std::move(file));
         }
         else
             break;
     }
 
-    if (inputFiles.empty())
-        std::cout << inputIsEmpty << inputDir << std::endl;
+    if (inFiles.empty())
+        std::cout << inputIsEmpty << inDir << std::endl;
     else
-        mergeFiles(inputFiles);
+        mergeFiles(inFiles);
     success = true;
 }
 
@@ -64,12 +66,12 @@ void MergeSortedClass::mergeFiles(std::vector<std::ifstream>& files) const
     for (size_t i = 0; i < files.size(); i++)
     {
         uint64_t value;
-        if (readNextNum(files[i], value))                 //files[i] >> value
+        if (readNextNum(files[i], value))
             minHeap.push({value, i});
     }
 
-    std::filesystem::path outputPath = outputDir / outName;
-    std::ofstream output(outputPath);
+    fs::path outPath = outDir / outName;
+    std::ofstream output(outPath);
 
     if (!output.is_open())
     {
@@ -89,9 +91,9 @@ void MergeSortedClass::mergeFiles(std::vector<std::ifstream>& files) const
         output << value;
         isFirst = false;
 
-        uint64_t nextValue;
-        if (readNextNum(files[fileIndex],nextValue))
-            minHeap.push({nextValue, fileIndex});
+        uint64_t nextVal;
+        if (readNextNum(files[fileIndex],nextVal))
+            minHeap.push({nextVal, fileIndex});
     }
     output.close();
 }

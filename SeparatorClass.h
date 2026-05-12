@@ -16,7 +16,10 @@
 #include <filesystem>
 #include <atomic>
 #include <algorithm>
-#include "ParametersClass.h"
+#include "ConfigClass.h"
+
+namespace fs = std::filesystem;
+using cfg = ConfigClass;
 
 class SeparatorClass
 {
@@ -24,26 +27,29 @@ private:
 
     inline static constexpr std::string_view notFound = "File not found: ";
     inline static constexpr std::string endName = "SortedPartN";  //end of partedName
-    bool success;
-    std::mutex bufferMutex;
-    std::condition_variable cv_reader;
-    std::condition_variable cv_writer;
 
-    std::atomic<bool> readerGo = true;
-    std::atomic<bool> writerGo = false;
+    bool success;
+    std::mutex bufMtx;
+
+    std::condition_variable cv_r;
+    std::condition_variable cv_w;
+
+    std::atomic<bool> rGo = true;
+    std::atomic<bool> wGo = false;
     std::atomic<bool> stopRead = false;
 
-    std::filesystem::path inputDir;
-    std::filesystem::path outputDir;
+    fs::path inDir;
+    fs::path outDir;
 
-    std::filesystem::path inName;
-    std::filesystem::path outName;
+    fs::path inName;
+    fs::path outName;
 
-    std::vector<uint64_t> sharedBuffer;
-    uint64_t bufferLen;
+    std::vector<uint64_t> shrdBuf;
+    uint64_t bufSz;
 public:
-    SeparatorClass(const std::filesystem::path& inputDirectory, const std::filesystem::path& outputDirectory, ParametersClass* parametersData, const uint64_t bufferLength, const std::filesystem::path& inputName, const std::filesystem::path& outputName);
-    void controller();
+    SeparatorClass(const fs::path& inputDir, const fs::path& outputDir,
+        const cfg *config, uint64_t bufSize, const fs::path& inputName, const fs::path& outputName);
+    void ctrl();
     void read();
 
     void write();
