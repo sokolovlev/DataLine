@@ -2,8 +2,8 @@
 // Created by Lev on 07.05.2026.
 //
 
-#ifndef UNTITLED26_READERCLASS_H
-#define UNTITLED26_READERCLASS_H
+#ifndef UNTITLED26_SEPARATORCLASS_H
+#define UNTITLED26_SEPARATORCLASS_H
 
 
 #include <thread>
@@ -58,4 +58,4 @@ public:
     bool is_success() const;
 };
 
-#endif //UNTITLED26_READERCLASS_H
+#endif //UNTITLED26_SEPARATORCLASS_H

@@ -2,8 +2,8 @@
 // Created by Lev on 12.05.2026.
 //
 
-#ifndef DATALINE_PARAMETERS_H
-#define DATALINE_PARAMETERS_H
+#ifndef DATALINE_CONFIGCLASS_H
+#define DATALINE_CONFIGCLASS_H
 
 #include <cstdint>
 #include "vector"
@@ -55,4 +55,4 @@ public:
 };
 
 
-#endif //DATALINE_PARAMETERS_H
+#endif //DATALINE_CONFIGCLASS_H
