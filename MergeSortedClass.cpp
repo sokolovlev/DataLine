@@ -7,7 +7,7 @@
 MergeSortedClass::MergeSortedClass(const ConfigClass* config)
 {
     inDir = config -> getInDir();
-    inDir = config -> getTDir();
+    tDir = config -> getTDir();
     outDir = config -> getOutDir();
     bufSz = config -> getBufSz();
 

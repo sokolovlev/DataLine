@@ -101,10 +101,7 @@ void SeparatorClass::write()
             file << shrdBuf[i];
             std::this_thread::sleep_for(WRITE_TIME);
             if (i + 1 < bufSz)
-            {
-                std::this_thread::sleep_for(WRITE_TIME);
                 file << ',';
-            }
         }
 
         wGo = false;
