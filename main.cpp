@@ -9,8 +9,8 @@ int main()
 {
     constexpr int len = 6;
     std::ifstream config("input/config.csv");
-    std::vector<uint64_t> tokens(len);
 
+    std::vector<uint64_t> tokens(len);
     if (config.is_open())
     {
         constexpr int parametersNum = 5;
@@ -28,18 +28,13 @@ int main()
         exit(1);
     }
 
-
-    std::string inputDir = "input";
-    std::string outputDir = "output";
-
     std::string inName;
     std::string outName;
 
-    std::string tDir = "tech";
-    std::cout << "input file name";
+    std::cout << "input file name\n";
     std::cin >> inName;
 
-    std::cout << "output file name";
+    std::cout << "output file name\n";
     std::cin >> outName;
 
     ConfigClass cfg(tokens,inName,outName);
