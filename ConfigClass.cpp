@@ -6,7 +6,7 @@
 
 
 ConfigClass::ConfigClass(const std::vector<uint64_t>& params,const fs::path& inputName,
-                         const fs::path& outputName)
+    const fs::path& outputName)
 {
     inName = inputName;
     outName = outputName;

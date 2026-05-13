@@ -4,7 +4,7 @@
 
 #include "MergeSortedClass.h"
 
-MergeSortedClass::MergeSortedClass(const cfg* config)
+MergeSortedClass::MergeSortedClass(const ConfigClass* config)
 {
     inDir = config -> getInDir();
     inDir = config -> getTDir();

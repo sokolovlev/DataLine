@@ -16,7 +16,7 @@
 #include "ConfigClass.h"
 
 namespace fs = std::filesystem;
-using cfg = ConfigClass;
+
 
 class ManagerClass
 {
@@ -28,24 +28,17 @@ private:
     inline static constexpr std::string_view success = "mission complete";
     inline static constexpr std::string_view filed = "something go wrong, we fix this problem in future";
 
-    inline static std::atomic<bool> isContinue{true};
-
     fs::path inDir;
-    fs::path outDir;
-    fs::path tDir;
-
     fs::path inName;
-    fs::path outName;
 
     size_t bufSz;
     uint64_t ramLmt;
-    cfg *config;
+    ConfigClass *config;
 
 public:
 
-    ManagerClass(cfg* cfgPotinter);
+    ManagerClass(ConfigClass* configPtr);
     uint64_t getLen() const;
-    void setConfig(cfg* cfgPointer){config = cfgPointer;}
 
     bool isEnoughMemory() const;
     void run() const;

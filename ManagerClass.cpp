@@ -6,7 +6,7 @@
 #include "SeparatorClass.h"
 #include "ConfigClass.h"
 
-ManagerClass::ManagerClass(cfg* inConfig)
+ManagerClass::ManagerClass(ConfigClass* configPtr)
 {
     constexpr int min = 30 * 1024 * 1024;
     constexpr int mid = 40 * 1024 * 1024;
@@ -15,15 +15,10 @@ ManagerClass::ManagerClass(cfg* inConfig)
     constexpr int extrm = 70 * 1024 * 1024;
 
     constexpr size_t sizeULL = sizeof(uint64_t);
-
-    setConfig(inConfig);
+    config = configPtr;
 
     inDir = config -> getInDir();
-    outDir = config -> getOutDir();
-    tDir = config -> getTDir();
-
     inName = config -> getInName();
-    outName = config -> getOutName();
 
     ramLmt = config -> getRamLmt() * 1024 * 1024;
     setLimit(ramLmt);
@@ -50,12 +45,10 @@ uint64_t ManagerClass::getLen() const  // number of data (without delimiters and
     constexpr char delimiter = ',';
     constexpr size_t unitLen = sizeof(uint64_t);
 
-    fs::path inPath = inDir / "source.csv";
-    std::ifstream file(inPath);
-
+    std::ifstream file(inDir / inName);
     if (!file.is_open())
     {
-        std::cerr << fileOpenError << inPath << std::endl;
+        std::cerr << fileOpenError << inDir / inName << std::endl;
         exit(1);
     }
 

@@ -18,8 +18,8 @@
 #include <algorithm>
 #include "ConfigClass.h"
 
+
 namespace fs = std::filesystem;
-using cfg = ConfigClass;
 
 class SeparatorClass
 {
@@ -50,7 +50,7 @@ private:
 
 public:
 
-    SeparatorClass(const cfg *config);
+    SeparatorClass(const ConfigClass *config);
     void ctrl();
     void read();
 

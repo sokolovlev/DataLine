@@ -4,7 +4,7 @@
 
 #include "SeparatorClass.h"
 
-SeparatorClass::SeparatorClass(const cfg* config)
+SeparatorClass::SeparatorClass(const ConfigClass* config)
 {
     inDir = config -> getInDir();
     tDir = config -> getTDir();

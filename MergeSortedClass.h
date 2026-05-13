@@ -15,7 +15,6 @@
 #include "ConfigClass.h"
 
 namespace fs = std::filesystem;
-using cfg = ConfigClass;
 
 class MergeSortedClass
 {
@@ -35,7 +34,7 @@ private:
 
 public:
 
-    MergeSortedClass(const cfg* config);
+    MergeSortedClass(const ConfigClass* config);
     ~MergeSortedClass();
 
     void run();
