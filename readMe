@@ -1,0 +1,7 @@
+Compiller make directory input and output near binry file.
+you must add to input file: YOUR_NAME.csv and config.csv (config.csv may be only config.csv, not somethin another name)
+in config.csv you need write 1) readint_time (MS) 2)write_time (MS) 3) move_time (MS) 4) longMoveTime (MS) 5) (Ram Limit (MB))
+in YOUR_NAME.csv (source file) you need write numbers (for example: "1,2,46,74,8" or another)
+when you start program you need to put in colsole name of input file "YOUR_NAME.CSV". and after, write output "result.csv" or another.
+After program succesfull ended, in output directory you will see result file with sorted numbers.
+Temporary files stored in tech directory while runtime, after temporary files will deleted. You cannot rename temporaryFiles.
