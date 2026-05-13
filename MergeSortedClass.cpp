@@ -14,6 +14,11 @@ MergeSortedClass::MergeSortedClass(const ConfigClass* config)
     inName = config -> getInName();
     outName = config -> getOutName();
     success = false;
+
+    READ_TIME = config -> getRTime();
+    WRITE_TIME = config -> getWTime();
+    MOVE_TIME = config -> getMTime();
+    LONG_MOVE_TIME = config -> getLMTime();
 }
 
 MergeSortedClass::~MergeSortedClass()
@@ -68,8 +73,11 @@ void MergeSortedClass::mergeFiles(std::vector<std::ifstream>& files) const
     for (size_t i = 0; i < files.size(); i++)
     {
         uint64_t value;
+
         if (msc::readNextNum(files[i], value))
             minHeap.push({value, i});
+
+        std::this_thread::sleep_for(READ_TIME);
     }
 
     fs::path outPath = outDir / outName;
@@ -90,6 +98,7 @@ void MergeSortedClass::mergeFiles(std::vector<std::ifstream>& files) const
         if (!isFirst)
             output << ",";
 
+        std::this_thread::sleep_for(WRITE_TIME);
         output << value;
         isFirst = false;
 

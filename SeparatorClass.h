@@ -20,6 +20,7 @@
 
 
 namespace fs = std::filesystem;
+namespace chrn = std::chrono;
 
 class SeparatorClass
 {
@@ -47,6 +48,11 @@ private:
 
     std::vector<uint64_t> shrdBuf;
     uint64_t bufSz;
+
+    chrn::milliseconds READ_TIME;
+    chrn::milliseconds WRITE_TIME;
+    chrn::milliseconds MOVE_TIME;
+    chrn::milliseconds LONG_MOVE_TIME;
 
 public:
 

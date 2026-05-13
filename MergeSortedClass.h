@@ -9,12 +9,14 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <thread>
 
 #include <vector>
 #include <queue>
 #include "ConfigClass.h"
 
 namespace fs = std::filesystem;
+namespace chrn = std::chrono;
 
 class MergeSortedClass
 {
@@ -31,6 +33,11 @@ private:
 
     inline static constexpr std::string_view inputIsEmpty = "Input directory is empty";
     inline static constexpr std::string_view createOutputFailed = "error make outputFile\n";
+
+    chrn::milliseconds READ_TIME;
+    chrn::milliseconds WRITE_TIME;
+    chrn::milliseconds MOVE_TIME;
+    chrn::milliseconds LONG_MOVE_TIME;
 
 public:
 

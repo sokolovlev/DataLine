@@ -11,11 +11,11 @@ ConfigClass::ConfigClass(const std::vector<uint64_t>& params,const fs::path& inp
     inName = inputName;
     outName = outputName;
 
-    readT = params[0];
-    writeT = params[1];
+    readT = chrn::milliseconds(params[0]);
+    writeT = chrn::milliseconds(params[1]);
 
-    moveT = params[2];
-    longMoveT = params[3];
+    moveT = chrn::milliseconds(params[2]);
+    longMoveT = chrn::milliseconds(params[3]);
 
     ramLmt = params[4];
     bufSz = 0;

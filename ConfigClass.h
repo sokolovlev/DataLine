@@ -10,6 +10,7 @@
 #include <filesystem>
 
 namespace fs = std::filesystem;
+namespace chrn = std::chrono;
 
 class ConfigClass
 {
@@ -21,11 +22,11 @@ private:
     fs::path inName;
     fs::path outName;
 
-    uint64_t readT;      //Ms
-    uint64_t writeT;     //Ms
+    chrn::milliseconds readT;      //Ms
+    chrn::milliseconds writeT;     //Ms
 
-    uint64_t longMoveT;  //Ms    relocate for x positions (x > 1)
-    uint64_t moveT;      //Ms  relocate for 1 position
+    chrn::milliseconds longMoveT;  //Ms    relocate for x positions (x > 1)
+    chrn::milliseconds moveT;      //Ms  relocate for 1 position
 
     uint64_t ramLmt;      //MB
     uint64_t bufSz;
@@ -36,7 +37,7 @@ public:
         const fs::path& outputName);
 
     void setBufSz(uint64_t len) {bufSz = len;}
-    void setRTime(uint64_t readTime) {readT = readTime;}
+    void setRTime(chrn::milliseconds readTime) {readT = readTime;}
 
     fs::path getInName() const {return inName;}
     fs::path getOutName() const {return outName;}
@@ -46,11 +47,11 @@ public:
     fs::path getTDir() const {return tDir;}
 
     uint64_t getBufSz() const {return bufSz;}
-    uint64_t getRTime() const {return readT;}        //Ms
-    uint64_t getWTime() const {return writeT;}       //Ms
+    chrn::milliseconds getRTime() const {return readT;}        //Ms
+    chrn::milliseconds getWTime() const {return writeT;}       //Ms
 
-    uint64_t getLMTime()  const {return longMoveT;}  //Ms
-    uint64_t getMTime() const {return moveT;}        //Ms
+    chrn::milliseconds getLMTime()  const {return longMoveT;}  //Ms
+    chrn::milliseconds getMTime() const {return moveT;}        //Ms
     uint64_t getRamLmt() const {return ramLmt;}      //MB
 };
 

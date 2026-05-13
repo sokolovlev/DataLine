@@ -16,6 +16,11 @@ SeparatorClass::SeparatorClass(const ConfigClass* config)
     bufSz = config -> getBufSz();
     shrdBuf.resize(bufSz);
     success = false;
+
+    READ_TIME = config -> getRTime();
+    WRITE_TIME = config -> getWTime();
+    MOVE_TIME = config -> getMTime();
+    LONG_MOVE_TIME = config -> getLMTime();
 }
 
 void SeparatorClass::ctrl()
@@ -53,7 +58,11 @@ void SeparatorClass::read()
         while (std::getline(file, token, ',') && i != bufSz)
         {
             if (!token.empty())
+            {
+                std::this_thread::sleep_for(READ_TIME);
                 shrdBuf[i] = std::stoull(token);
+            }
+            std::this_thread::sleep_for(MOVE_TIME);
             i++;
         }
 
@@ -69,6 +78,7 @@ void SeparatorClass::read()
             cv_w.notify_one();
             break;
         }
+
         cv_w.notify_one();
     }
 }
@@ -89,8 +99,12 @@ void SeparatorClass::write()
         for (uint64_t i = 0; i < bufSz; i++)
         {
             file << shrdBuf[i];
+            std::this_thread::sleep_for(WRITE_TIME);
             if (i + 1 < bufSz)
+            {
+                std::this_thread::sleep_for(WRITE_TIME);
                 file << ',';
+            }
         }
 
         wGo = false;
