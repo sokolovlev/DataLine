@@ -4,16 +4,16 @@
 
 #include "SeparatorClass.h"
 
-SeparatorClass::SeparatorClass(const fs::path& inputDir, const fs::path& outputDir,
-    const cfg* config ,uint64_t bufSize, const fs::path& inputName, const fs::path& outputName)
+SeparatorClass::SeparatorClass(const cfg* config)
 {
-    inDir = inputDir;
-    outDir = outputDir;
+    inDir = config -> getInDir();
+    tDir = config -> getTDir();
+    outDir = config -> getOutDir();
 
-    inName = inputName;
-    outName = outputName;
+    inName = config -> getInName();
+    outName = config -> getOutName();
 
-    bufSz = bufSize;
+    bufSz = config -> getBufSz();
     shrdBuf.resize(bufSz);
     success = false;
 }
@@ -79,7 +79,7 @@ void SeparatorClass::write()
     while (true)
     {
         fs::path partedName = endName + std::to_string(num++) + ".csv";
-        fs::path outputPath = outDir / partedName;
+        fs::path outputPath = tDir / partedName;
         std::ofstream file(outputPath);
 
         std::unique_lock lock(bufMtx);

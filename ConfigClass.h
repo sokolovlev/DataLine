@@ -14,7 +14,6 @@ namespace fs = std::filesystem;
 class ConfigClass
 {
 private:
-
     fs::path inDir = "input";
     fs::path outDir = "output";
     fs::path tDir = "tech";
@@ -36,16 +35,23 @@ public:
     ConfigClass(const std::vector<uint64_t>& params,const fs::path& inputName,
         const fs::path& outputName);
 
-    void setBufSz(uint64_t len);
-    void setRTime(uint64_t readTime);
+    void setBufSz(uint64_t len) {bufSz = len;}
+    void setRTime(uint64_t readTime) {readT = readTime;}
 
-    uint64_t getBufSz() const;
-    uint64_t getRTime() const;      //Ms
-    uint64_t getWTime() const;     //Ms
+    fs::path getInName() const {return inName;}
+    fs::path getOutName() const {return outName;}
 
-    uint64_t getLMTime() const;  //Ms
-    uint64_t getMTime() const;      //Ms
-    uint64_t getRamLmt() const;      //MB
+    fs::path getInDir() const {return inDir;}
+    fs::path getOutDir() const {return outDir;}
+    fs::path getTDir() const {return tDir;}
+
+    uint64_t getBufSz() const {return bufSz;}
+    uint64_t getRTime() const {return readT;}        //Ms
+    uint64_t getWTime() const {return writeT;}       //Ms
+
+    uint64_t getLMTime()  const {return longMoveT;}  //Ms
+    uint64_t getMTime() const {return moveT;}        //Ms
+    uint64_t getRamLmt() const {return ramLmt;}      //MB
 };
 
 

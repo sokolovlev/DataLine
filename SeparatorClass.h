@@ -39,6 +39,7 @@ private:
     std::atomic<bool> stopRead = false;
 
     fs::path inDir;
+    fs::path tDir;
     fs::path outDir;
 
     fs::path inName;
@@ -46,9 +47,10 @@ private:
 
     std::vector<uint64_t> shrdBuf;
     uint64_t bufSz;
+
 public:
-    SeparatorClass(const fs::path& inputDir, const fs::path& outputDir,
-        const cfg *config, uint64_t bufSize, const fs::path& inputName, const fs::path& outputName);
+
+    SeparatorClass(const cfg *config);
     void ctrl();
     void read();
 

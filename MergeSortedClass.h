@@ -21,6 +21,7 @@ class MergeSortedClass
 {
 private:
     fs::path inDir;
+    fs::path tDir;
     fs::path outDir;
 
     fs::path inName;
@@ -29,17 +30,18 @@ private:
     uint64_t bufSz;
     bool success;
 
-    inline static constexpr std::string_view outputName = "sorted_result.csv";
     inline static constexpr std::string_view inputIsEmpty = "Input directory is empty";
     inline static constexpr std::string_view createOutputFailed = "error make outputFile\n";
+
 public:
-    MergeSortedClass(const fs::path& inputDir, const fs::path& outputDir,
-        const cfg* config, const fs::path& inputName, const fs::path& outputName);
+
+    MergeSortedClass(const cfg* config);
     ~MergeSortedClass();
 
     void run();
     void mergeFiles(std::vector<std::ifstream>& files) const;
-    bool readNextNum(std::ifstream& file, uint64_t& value) const;
+
+    static bool readNextNum(std::ifstream& file, uint64_t& value);
     bool is_success() const;
 };
 

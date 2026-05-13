@@ -16,7 +16,7 @@
 #include "ConfigClass.h"
 
 namespace fs = std::filesystem;
-using ps = ConfigClass;
+using cfg = ConfigClass;
 
 class ManagerClass
 {
@@ -39,15 +39,16 @@ private:
 
     size_t bufSz;
     uint64_t ramLmt;
-    ps *parameters;
+    cfg *config;
 
 public:
 
-    ManagerClass(const fs::path& inputDir, const fs::path& outputDir, const fs::path& techDir, ps* parametersData, const fs::path& inputName, const fs::path& outputName);
+    ManagerClass(cfg* cfgPotinter);
     uint64_t getLen() const;
+    void setConfig(cfg* cfgPointer){config = cfgPointer;}
 
     bool isEnoughMemory() const;
-    void run();
+    void run() const;
 };
 
 

@@ -4,24 +4,24 @@
 
 #include "MergeSortedClass.h"
 
-MergeSortedClass::MergeSortedClass(const fs::path& inputDir, const fs::path& outputDir,
-    const cfg* config, const fs::path& inputName, const fs::path& outputName)
+MergeSortedClass::MergeSortedClass(const cfg* config)
 {
-    inDir = inputDir;
-    outDir = outputDir;
+    inDir = config -> getInDir();
+    inDir = config -> getTDir();
+    outDir = config -> getOutDir();
     bufSz = config -> getBufSz();
 
-    inName = inputName;
-    outName = outputName;
+    inName = config -> getInName();
+    outName = config -> getOutName();
     success = false;
 }
 
 MergeSortedClass::~MergeSortedClass()
 {
-    if (fs::exists(inDir))
+    if (fs::exists(tDir))
     {
         using dirIter = std::filesystem::directory_iterator;
-        for (const auto& entry : dirIter(inDir))
+        for (const auto& entry : dirIter(tDir))
             if (fs::is_regular_file(entry.path()))
                 fs::remove(entry.path());
     }
@@ -63,10 +63,12 @@ void MergeSortedClass::mergeFiles(std::vector<std::ifstream>& files) const
     using Element = std::pair<uint64_t, size_t>;
     std::priority_queue<Element, std::vector<Element>, std::greater<Element>> minHeap;
 
+    using  msc = MergeSortedClass;
+
     for (size_t i = 0; i < files.size(); i++)
     {
         uint64_t value;
-        if (readNextNum(files[i], value))
+        if (msc::readNextNum(files[i], value))
             minHeap.push({value, i});
     }
 
@@ -92,13 +94,13 @@ void MergeSortedClass::mergeFiles(std::vector<std::ifstream>& files) const
         isFirst = false;
 
         uint64_t nextVal;
-        if (readNextNum(files[fileIndex],nextVal))
+        if (msc::readNextNum(files[fileIndex],nextVal))
             minHeap.push({nextVal, fileIndex});
     }
     output.close();
 }
 
-bool MergeSortedClass::readNextNum(std::ifstream& file, uint64_t& value) const
+bool MergeSortedClass::readNextNum(std::ifstream& file, uint64_t& value)
 {
     if (!(file >> value))
         return false;

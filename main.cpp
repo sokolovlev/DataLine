@@ -32,19 +32,19 @@ int main()
     std::string inputDir = "input";
     std::string outputDir = "output";
 
-    std::string inputName;
-    std::string outputName;
+    std::string inName;
+    std::string outName;
 
-    std::string techDir = "tech";
-    std::cout << "inpute file name";
-    std::cin >> inputName;
+    std::string tDir = "tech";
+    std::cout << "input file name";
+    std::cin >> inName;
 
-    std::cout << "outpute file name";
-    std::cin >> outputName;
+    std::cout << "output file name";
+    std::cin >> outName;
 
-    ConfigClass parameters(tokens,inputName,outputName);
+    ConfigClass cfg(tokens,inName,outName);
 
-    ManagerClass manager(inputDir,outputDir, techDir, &parameters,inputName,outputName);
+    ManagerClass manager(&cfg);
     manager.run();
 
     return 0;

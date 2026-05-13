@@ -6,8 +6,7 @@
 #include "SeparatorClass.h"
 #include "ConfigClass.h"
 
-
-ManagerClass::ManagerClass(const fs::path& inputDir, const fs::path& outputDir,const fs::path& techDir, ps* parametersData, const fs::path& inputName, const fs::path& outputName)
+ManagerClass::ManagerClass(cfg* inConfig)
 {
     constexpr int min = 30 * 1024 * 1024;
     constexpr int mid = 40 * 1024 * 1024;
@@ -17,14 +16,16 @@ ManagerClass::ManagerClass(const fs::path& inputDir, const fs::path& outputDir,c
 
     constexpr size_t sizeULL = sizeof(uint64_t);
 
-    inDir = inputDir;
-    outDir = outputDir;
-    tDir = techDir;
+    setConfig(inConfig);
 
-    inName = inputName;
-    outName = outputName;
+    inDir = config -> getInDir();
+    outDir = config -> getOutDir();
+    tDir = config -> getTDir();
 
-    ramLmt = parametersData -> getRamLmt() * 1024 * 1024;
+    inName = config -> getInName();
+    outName = config -> getOutName();
+
+    ramLmt = config -> getRamLmt() * 1024 * 1024;
     setLimit(ramLmt);
 
     if (ramLmt < min)
@@ -41,8 +42,7 @@ ManagerClass::ManagerClass(const fs::path& inputDir, const fs::path& outputDir,c
     else
         bufSz = 0.68 * ramLmt  / sizeULL;
 
-    parametersData -> setBufSz(bufSz);
-    parametersData -> getBufSz();
+    config -> setBufSz(bufSz);
 }
 
 uint64_t ManagerClass::getLen() const  // number of data (without delimiters and '\n' symbols)
@@ -95,14 +95,14 @@ bool ManagerClass::isEnoughMemory() const
         return false;
 }
 
-void ManagerClass::run()
+void ManagerClass::run() const
 {
-    SeparatorClass separator(inDir,tDir,parameters,bufSz,inName,outName);
+    SeparatorClass separator(config);
     separator.ctrl();
 
     if (separator.is_success())
     {
-        MergeSortedClass merge(tDir,outDir,parameters,inName,outName);
+        MergeSortedClass merge(config);
         merge.run();
 
         if (merge.is_success())
