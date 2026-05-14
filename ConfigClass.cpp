@@ -18,7 +18,7 @@ ConfigClass::ConfigClass(const std::vector<uint64_t>& params,
         , moveT(chrn::milliseconds(params[2]))
         , longMoveT(chrn::milliseconds(params[3]))
 
-        , ramLmt(params[4])
+        , ramLmt(params[4] * 1024 * 1024)
         , bufSz(0)
 {
 

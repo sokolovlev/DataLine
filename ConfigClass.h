@@ -39,20 +39,20 @@ public:
 
     void setBufSz(uint64_t len) {bufSz = len;}
 
-    fs::path getInName() const {return inName;}
-    fs::path getOutName() const {return outName;}
+    [[nodiscard]] fs::path getInName() const {return inName;}
+    [[nodiscard]] fs::path getOutName() const {return outName;}
 
-    fs::path getInDir() const {return inDir;}
-    fs::path getOutDir() const {return outDir;}
-    fs::path getTDir() const {return tDir;}
+    [[nodiscard]] fs::path getInDir() const {return inDir;}
+    [[nodiscard]] fs::path getOutDir() const {return outDir;}
+    [[nodiscard]] fs::path getTDir() const {return tDir;}
 
-    uint64_t getBufSz() const {return bufSz;}
-    chrn::milliseconds getRTime() const {return readT;}        //Ms
-    chrn::milliseconds getWTime() const {return writeT;}       //Ms
+    [[nodiscard]] uint64_t getBufSz() const {return bufSz;}
+    [[nodiscard]] chrn::milliseconds getRTime() const {return readT;}        //Ms
+    [[nodiscard]] chrn::milliseconds getWTime() const {return writeT;}       //Ms
 
-    chrn::milliseconds getLMTime()  const {return longMoveT;}  //Ms
-    chrn::milliseconds getMTime() const {return moveT;}        //Ms
-    uint64_t getRamLmt() const {return ramLmt;}      //MB
+    [[nodiscard]] chrn::milliseconds getLMTime()  const {return longMoveT;}  //Ms
+    [[nodiscard]] chrn::milliseconds getMTime() const {return moveT;}        //Ms
+    [[nodiscard]] uint64_t getRamLmt() const {return ramLmt;}      //MB
 };
 
 

@@ -5,39 +5,19 @@
 #include "ManagerClass.h"
 #include "SeparatorClass.h"
 #include "ConfigClass.h"
+#include "techOps.h"
 
-ManagerClass::ManagerClass(ConfigClass& configLink)
+ManagerClass::ManagerClass(const ConfigClass& configLink)
+
             : config(configLink)
-            , inDir(configLink.getInDir())
+            , inDir(config.getInDir())
+            , inName(config.getInName())
 
-            , inName(configLink.getInName())
-            , ramLmt(configLink.getRamLmt() * 1024 * 1024)
+            , ramLmt(config.getRamLmt())
+            , bufSz(config.getBufSz())
 
 {
-    constexpr int min = 30 * 1024 * 1024;
-    constexpr int mid = 40 * 1024 * 1024;
-
-    constexpr int high = 50 * 1024 * 1024;
-    constexpr int extrm = 70 * 1024 * 1024;
-
-    constexpr size_t sizeULL = sizeof(uint64_t);
     setLimit(ramLmt);
-
-    if (ramLmt < min)
-    {
-        std::cout << ramTooLow << std::endl;
-        exit(1);
-    }
-    else if (ramLmt < mid)
-        bufSz = 0.26 * ramLmt  / sizeULL;
-    else if (ramLmt < high)
-        bufSz = 0.45 * ramLmt  / sizeULL;
-    else if (ramLmt < extrm)
-        bufSz = 0.56 * ramLmt  / sizeULL;
-    else
-        bufSz = 0.68 * ramLmt  / sizeULL;
-
-    config.setBufSz(bufSz);
 }
 
 uint64_t ManagerClass::getLen() const  // number of data (without delimiters and '\n' symbols)
@@ -48,7 +28,7 @@ uint64_t ManagerClass::getLen() const  // number of data (without delimiters and
     std::ifstream file(inDir / inName);
     if (!file.is_open())
     {
-        std::cerr << fileOpenError << inDir / inName << std::endl;
+        std::cerr << techOps::kFileOpenError << inDir / inName << std::endl;
         exit(1);
     }
 
@@ -62,7 +42,7 @@ uint64_t ManagerClass::getLen() const  // number of data (without delimiters and
         {
             if (len > unitLen)
             {
-                std::cout << dataUnitTooBig << std::endl;
+                std::cout << techOps::kDataUnitTooBig << std::endl;
                 exit(1);
             }
             len = 0;
@@ -99,8 +79,8 @@ void ManagerClass::run() const
         merge.run();
 
         if (merge.is_success())
-            std::cout << success << std::endl;
+            std::cout << techOps::kSuccess << std::endl;
     }
     else
-        std::cout << filed << std::endl;
+        std::cout << techOps::kFailed << std::endl;
 }

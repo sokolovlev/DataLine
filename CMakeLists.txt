@@ -15,6 +15,8 @@ add_executable(DataLine main.cpp
         MergeSortedClass.h
         ConfigClass.cpp
         ConfigClass.h
+        "techOps.h"
+        techOps.cpp
         #test.cpp
 )
 

@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <thread>
+#include "techOps.h"
 
 #include <vector>
 #include <queue>
@@ -28,12 +29,8 @@ private:
     const fs::path inName;
     const fs::path outName;
 
-    uint64_t bufSz;
+    const uint64_t bufSz;
     bool success;
-
-    inline static constexpr std::string_view inputIsEmpty = "Input directory is empty\n";
-    inline static constexpr std::string_view techIsEmpty = "Tech directory is empty\n";
-    inline static constexpr std::string_view createOutputFailed = "error make outputFile\n";
 
     const chrn::milliseconds READ_TIME;
     const chrn::milliseconds WRITE_TIME;
@@ -42,14 +39,14 @@ private:
 
 public:
 
-    MergeSortedClass(const ConfigClass& config);
+    explicit MergeSortedClass(const ConfigClass& config);
     ~MergeSortedClass();
 
     void run();
     void mergeFiles(std::vector<std::ifstream>& files) const;
 
     static bool readNextNum(std::ifstream& file, uint64_t& value);
-    bool is_success() const;
+    [[nodiscard]] bool is_success() const;
 };
 
 #endif //DATALINE_MERGESORTEDCLASS_H

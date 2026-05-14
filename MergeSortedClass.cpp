@@ -61,7 +61,7 @@ void MergeSortedClass::run()
 
     if (inFiles.empty())
     {
-        std::cout << techIsEmpty << tDir << std::endl;
+        std::cout << techOps::kTechIsEmpty << tDir << std::endl;
         success = false;
     }
 
@@ -77,13 +77,11 @@ void MergeSortedClass::mergeFiles(std::vector<std::ifstream>& files) const
     using Element = std::pair<uint64_t, size_t>;
     std::priority_queue<Element, std::vector<Element>, std::greater<Element>> minHeap;
 
-    using  msc = MergeSortedClass;
-
     for (size_t i = 0; i < files.size(); i++)
     {
         uint64_t value;
 
-        if (msc::readNextNum(files[i], value))
+        if (readNextNum(files[i], value))
             minHeap.push({value, i});
 
         std::this_thread::sleep_for(READ_TIME);
@@ -94,7 +92,7 @@ void MergeSortedClass::mergeFiles(std::vector<std::ifstream>& files) const
 
     if (!output.is_open())
     {
-        std::cerr << createOutputFailed;
+        std::cerr << techOps::kCreateOutputFailed;
         return;
     }
 
@@ -112,7 +110,7 @@ void MergeSortedClass::mergeFiles(std::vector<std::ifstream>& files) const
         isFirst = false;
 
         uint64_t nextVal;
-        if (msc::readNextNum(files[fileIndex],nextVal))
+        if (readNextNum(files[fileIndex],nextVal))
             minHeap.push({nextVal, fileIndex});
     }
     output.close();

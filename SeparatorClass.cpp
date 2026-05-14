@@ -44,7 +44,7 @@ void SeparatorClass::read()
 
     if (!file.is_open())
     {
-        std::cout << notFound << inDir << std::endl;
+        std::cout << techOps::kFileOpenError << inDir << std::endl;
         exit(1);
     }
 
@@ -89,7 +89,7 @@ void SeparatorClass::write()
     uint64_t num = 0;
     while (true)
     {
-        fs::path partedName = endName + std::to_string(num++) + ".csv";
+        fs::path partedName = techOps::kEndNameForSeparated + std::to_string(num++) + ".csv";
         fs::path outputPath = tDir / partedName;
         std::ofstream file(outputPath);
 

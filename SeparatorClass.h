@@ -17,6 +17,7 @@
 #include <atomic>
 #include <algorithm>
 #include "ConfigClass.h"
+#include "techOps.h"
 
 
 namespace fs = std::filesystem;
@@ -25,10 +26,6 @@ namespace chrn = std::chrono;
 class SeparatorClass
 {
 private:
-
-    inline static constexpr std::string_view notFound = "File not found: ";
-    inline static constexpr std::string endName = "SortedPartN";  //end of partedName
-
     bool success;
     std::mutex bufMtx;
 
@@ -56,12 +53,12 @@ private:
 
 public:
 
-    SeparatorClass(const ConfigClass& config);
+    explicit SeparatorClass(const ConfigClass& config);
     void ctrl();
     void read();
 
     void write();
-    bool is_success() const;
+    [[nodiscard]] bool is_success() const;
 };
 
 #endif //UNTITLED26_SEPARATORCLASS_H
