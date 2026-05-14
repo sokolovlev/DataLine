@@ -15,29 +15,29 @@ namespace chrn = std::chrono;
 class ConfigClass
 {
 private:
-    fs::path inDir = "input";
-    fs::path outDir = "output";
-    fs::path tDir = "tech";
+    const fs::path inDir = "input";
+    const fs::path outDir = "output";
+    const fs::path tDir = "tech";
 
-    fs::path inName;
-    fs::path outName;
+    const fs::path inName;
+    const fs::path outName;
 
-    chrn::milliseconds readT;      //Ms
-    chrn::milliseconds writeT;     //Ms
+    const chrn::milliseconds readT;      //Ms
+    const chrn::milliseconds writeT;     //Ms
 
-    chrn::milliseconds longMoveT;  //Ms    relocate for x positions (x > 1)
-    chrn::milliseconds moveT;      //Ms  relocate for 1 position
+    const chrn::milliseconds moveT;      //Ms  relocate for 1 position
+    const chrn::milliseconds longMoveT;  //Ms    relocate for x positions (x > 1)
 
     uint64_t ramLmt;      //MB
     uint64_t bufSz;
 
 public:
 
-    ConfigClass(const std::vector<uint64_t>& params,const fs::path& inputName,
-        const fs::path& outputName);
+    ConfigClass(const std::vector<uint64_t>& params,
+                const fs::path& inputName,
+                const fs::path& outputName);
 
     void setBufSz(uint64_t len) {bufSz = len;}
-    void setRTime(chrn::milliseconds readTime) {readT = readTime;}
 
     fs::path getInName() const {return inName;}
     fs::path getOutName() const {return outName;}

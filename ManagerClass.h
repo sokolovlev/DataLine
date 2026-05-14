@@ -28,16 +28,16 @@ private:
     inline static constexpr std::string_view success = "mission complete";
     inline static constexpr std::string_view filed = "something go wrong, we fix this problem in future";
 
+    ConfigClass& config;
     fs::path inDir;
     fs::path inName;
 
-    size_t bufSz;
     uint64_t ramLmt;
-    ConfigClass *config;
+    size_t bufSz;
 
 public:
 
-    ManagerClass(ConfigClass* configPtr);
+    ManagerClass(ConfigClass& configLink);
     uint64_t getLen() const;
 
     bool isEnoughMemory() const;

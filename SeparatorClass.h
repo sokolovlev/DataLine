@@ -39,24 +39,24 @@ private:
     std::atomic<bool> wGo = false;
     std::atomic<bool> stopRead = false;
 
-    fs::path inDir;
-    fs::path tDir;
-    fs::path outDir;
+    const fs::path inDir;
+    const fs::path tDir;
+    const fs::path outDir;
 
-    fs::path inName;
-    fs::path outName;
+    const fs::path inName;
+    const fs::path outName;
 
     std::vector<uint64_t> shrdBuf;
     uint64_t bufSz;
 
-    chrn::milliseconds READ_TIME;
-    chrn::milliseconds WRITE_TIME;
-    chrn::milliseconds MOVE_TIME;
-    chrn::milliseconds LONG_MOVE_TIME;
+    const chrn::milliseconds READ_TIME;
+    const chrn::milliseconds WRITE_TIME;
+    const chrn::milliseconds MOVE_TIME;
+    const chrn::milliseconds LONG_MOVE_TIME;
 
 public:
 
-    SeparatorClass(const ConfigClass *config);
+    SeparatorClass(const ConfigClass& config);
     void ctrl();
     void read();
 

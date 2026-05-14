@@ -4,23 +4,24 @@
 
 #include "SeparatorClass.h"
 
-SeparatorClass::SeparatorClass(const ConfigClass* config)
+SeparatorClass::SeparatorClass(const ConfigClass& config)
+
+            : success(false)
+            , inDir(config.getInDir())
+            , tDir(config.getTDir())
+            , outDir(config.getOutDir())
+
+            , inName(config.getInName())
+            , outName(config.getOutName())
+            , bufSz(config.getBufSz())
+
+            , READ_TIME(config.getRTime())
+            , WRITE_TIME(config.getWTime())
+            , MOVE_TIME(config.getMTime())
+            , LONG_MOVE_TIME(config.getLMTime())
+
 {
-    inDir = config -> getInDir();
-    tDir = config -> getTDir();
-    outDir = config -> getOutDir();
-
-    inName = config -> getInName();
-    outName = config -> getOutName();
-
-    bufSz = config -> getBufSz();
     shrdBuf.resize(bufSz);
-    success = false;
-
-    READ_TIME = config -> getRTime();
-    WRITE_TIME = config -> getWTime();
-    MOVE_TIME = config -> getMTime();
-    LONG_MOVE_TIME = config -> getLMTime();
 }
 
 void SeparatorClass::ctrl()

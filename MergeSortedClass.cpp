@@ -4,21 +4,24 @@
 
 #include "MergeSortedClass.h"
 
-MergeSortedClass::MergeSortedClass(const ConfigClass* config)
+MergeSortedClass::MergeSortedClass(const ConfigClass& config)
+
+            : inDir(config.getInDir())
+            , tDir(config.getTDir())
+            , outDir(config.getOutDir())
+
+            , inName(config.getInName())
+            , outName(config.getOutName())
+
+            , bufSz(config.getBufSz())
+            , success(false)
+
+            , READ_TIME(config.getRTime())
+            , WRITE_TIME(config.getWTime())
+            , MOVE_TIME(config.getMTime())
+            , LONG_MOVE_TIME(config.getLMTime())
 {
-    inDir = config -> getInDir();
-    tDir = config -> getTDir();
-    outDir = config -> getOutDir();
-    bufSz = config -> getBufSz();
 
-    inName = config -> getInName();
-    outName = config -> getOutName();
-    success = false;
-
-    READ_TIME = config -> getRTime();
-    WRITE_TIME = config -> getWTime();
-    MOVE_TIME = config -> getMTime();
-    LONG_MOVE_TIME = config -> getLMTime();
 }
 
 MergeSortedClass::~MergeSortedClass()
@@ -40,8 +43,8 @@ void MergeSortedClass::run()
     while (true)
     {
         fs::path sortedN = "SortedPartN" + std::to_string(num++) + ".csv";
-        fs::path inPath = inDir / sortedN;
-        std::ifstream file(inPath);
+        fs::path tPath = tDir / sortedN;
+        std::ifstream file(tPath);
 
         if (file.is_open())
         {
@@ -57,10 +60,16 @@ void MergeSortedClass::run()
     }
 
     if (inFiles.empty())
-        std::cout << inputIsEmpty << inDir << std::endl;
+    {
+        std::cout << techIsEmpty << tDir << std::endl;
+        success = false;
+    }
+
     else
+    {
         mergeFiles(inFiles);
-    success = true;
+        success = true;
+    }
 }
 
 void MergeSortedClass::mergeFiles(std::vector<std::ifstream>& files) const

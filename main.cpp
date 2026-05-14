@@ -39,7 +39,7 @@ int main()
 
     ConfigClass cfg(tokens,inName,outName);
 
-    ManagerClass manager(&cfg);
+    ManagerClass manager(cfg);
     manager.run();
 
     return 0;

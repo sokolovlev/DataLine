@@ -6,7 +6,13 @@
 #include "SeparatorClass.h"
 #include "ConfigClass.h"
 
-ManagerClass::ManagerClass(ConfigClass* configPtr)
+ManagerClass::ManagerClass(ConfigClass& configLink)
+            : config(configLink)
+            , inDir(configLink.getInDir())
+
+            , inName(configLink.getInName())
+            , ramLmt(configLink.getRamLmt() * 1024 * 1024)
+
 {
     constexpr int min = 30 * 1024 * 1024;
     constexpr int mid = 40 * 1024 * 1024;
@@ -15,12 +21,6 @@ ManagerClass::ManagerClass(ConfigClass* configPtr)
     constexpr int extrm = 70 * 1024 * 1024;
 
     constexpr size_t sizeULL = sizeof(uint64_t);
-    config = configPtr;
-
-    inDir = config -> getInDir();
-    inName = config -> getInName();
-
-    ramLmt = config -> getRamLmt() * 1024 * 1024;
     setLimit(ramLmt);
 
     if (ramLmt < min)
@@ -37,7 +37,7 @@ ManagerClass::ManagerClass(ConfigClass* configPtr)
     else
         bufSz = 0.68 * ramLmt  / sizeULL;
 
-    config -> setBufSz(bufSz);
+    config.setBufSz(bufSz);
 }
 
 uint64_t ManagerClass::getLen() const  // number of data (without delimiters and '\n' symbols)
