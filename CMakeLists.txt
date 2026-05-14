@@ -21,3 +21,12 @@ add_executable(DataLine main.cpp
 )
 
 target_link_options(DataLine PRIVATE -static-libstdc++ -static-libgcc)
+
+
+add_custom_command(
+        TARGET DataLine
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:DataLine>/input"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:DataLine>/tech"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:DataLine>/output"
+)
