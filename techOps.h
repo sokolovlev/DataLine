@@ -14,19 +14,24 @@
 
 namespace techOps
 {
+    //msg
+    inline constexpr std::string_view inputMsg = "input file name\n";
+    inline constexpr std::string_view outputMsg = "output file name\n";
+
     //success
     inline constexpr std::string_view kSeparated = "files separated successfully";
     inline constexpr std::string_view kMerged = "files merged successfully";
     inline constexpr std::string_view kSuccess = "mission complete";
 
     //errors
+    inline constexpr std::string_view kConfigError = "config Error";
     inline constexpr std::string_view kFileOpenError = "Cannot open file: ";
     inline constexpr std::string_view kRamTooLow = "for this file ram to small";
     inline constexpr std::string_view kDataUnitTooBig = "Data unit too big";
     inline constexpr std::string_view kCreateOutputFailed = "error make outputFile";
 
+    //names
     inline constexpr std::string kEndNameForSeparated = "SortedPartN";
-
     // Info
     inline constexpr std::string_view kInputIsEmpty = "Input directory is empty";
     inline constexpr std::string_view kTechIsEmpty = "Tech directory is empty";
@@ -46,6 +51,7 @@ namespace techOps
     inline constexpr std::string inputDir = "input";
     inline constexpr std::string techDir = "tech";
     inline constexpr std::string outputDir = "output";
+    inline const std::string kConfigPath = "input/config.csv";
 
 }
 

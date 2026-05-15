@@ -4,12 +4,12 @@
 #include <istream>
 #include "ConfigClass.h"
 #include "techOps.h"
-
+#include "techOps.h"
 
 int main()
 {
     constexpr int len = 6;
-    std::ifstream config("input/config.csv");
+    std::ifstream config(techOps::kConfigPath);
 
     std::vector<uint64_t> tokens(len);
     if (config.is_open())
@@ -25,17 +25,17 @@ int main()
     }
     else
     {
-        std::cout << "config Error";
+        std::cout << techOps::kConfigError;
         exit(1);
     }
 
     std::string inName;
     std::string outName;
 
-    std::cout << "input file name\n";
+    std::cout << techOps::inputMsg;
     std::cin >> inName;
 
-    std::cout << "output file name\n";
+    std::cout << techOps::outputMsg;
     std::cin >> outName;
 
     ConfigClass cfg(tokens,inName,outName);
