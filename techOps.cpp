@@ -1,7 +1,8 @@
-//
-// Created by Lev on 14.05.2026.
-//
+
+
+
 #include "techOps.h"
+
 
 namespace techOps
 {
@@ -27,4 +28,13 @@ namespace techOps
 
         return bufSz;
     }
+
+
+    uint64_t maxFileParts(const ConfigClass& config)
+    {
+        const uint64_t ramLmt = config.getRamLmt();
+        const uint64_t value = ((ramLmt / 1024) - 3072) / (8.3);      // max value of files
+        return value;
+    }
 }
+

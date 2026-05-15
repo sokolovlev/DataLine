@@ -1,6 +1,5 @@
-//
-// Created by Lev on 07.05.2026.
-//
+
+
 
 #ifndef UNTITLED26_SEPARATORCLASS_H
 #define UNTITLED26_SEPARATORCLASS_H

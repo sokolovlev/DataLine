@@ -1,6 +1,5 @@
-//
-// Created by Lev on 11.05.2026.
-//
+
+
 
 #ifndef DATALINE_MERGESORTEDCLASS_H
 #define DATALINE_MERGESORTEDCLASS_H
@@ -15,6 +14,7 @@
 #include <vector>
 #include <queue>
 #include "ConfigClass.h"
+
 
 namespace fs = std::filesystem;
 namespace chrn = std::chrono;

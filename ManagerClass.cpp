@@ -1,11 +1,11 @@
-//
-// Created by Lev on 07.05.2026.
-//
+
+
 
 #include "ManagerClass.h"
 #include "SeparatorClass.h"
 #include "ConfigClass.h"
 #include "techOps.h"
+
 
 ManagerClass::ManagerClass(const ConfigClass& configLink)
 
@@ -58,7 +58,7 @@ uint64_t ManagerClass::getLen() const  // number of data (without delimiters and
 
 bool ManagerClass::isEnoughMemory() const
 {
-    uint64_t value = ((ramLmt / 1024) - 3072) / (8.3);   // max value of files
+    uint64_t value = techOps::maxFileParts(config);   // max value of files
     uint64_t fileSz = getLen();
     uint64_t maxBufSz = ceil(fileSz / value);
 

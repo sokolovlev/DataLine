@@ -1,6 +1,5 @@
-//
-// Created by Lev on 14.05.2026.
-//
+
+
 
 #ifndef DATALINE_STRINGVIEW_CLASS_H
 #define DATALINE_STRINGVIEW_CLASS_H
@@ -10,6 +9,7 @@
 #include <string_view>
 #include "ConfigClass.h"
 #include <iostream>
+
 
 namespace techOps
 {
@@ -40,6 +40,8 @@ namespace techOps
     constexpr size_t kSizeULL = sizeof(uint64_t);
 
     size_t calcBufSz(const ConfigClass& config);
+
+    uint64_t maxFileParts(const ConfigClass& config);
 
 }
 

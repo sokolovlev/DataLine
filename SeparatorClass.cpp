@@ -1,6 +1,5 @@
-//
-// Created by Lev on 07.05.2026.
-//
+
+
 
 #include "SeparatorClass.h"
 

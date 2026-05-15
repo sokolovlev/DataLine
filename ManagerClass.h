@@ -1,6 +1,5 @@
-//
-// Created by Lev on 07.05.2026.
-//
+
+
 
 #ifndef DATALINE_MANAGERCLASS_H
 #define DATALINE_MANAGERCLASS_H
@@ -16,8 +15,8 @@
 #include "ConfigClass.h"
 #include "techOps.h"
 
-namespace fs = std::filesystem;
 
+namespace fs = std::filesystem;
 
 class ManagerClass
 {
@@ -31,9 +30,10 @@ private:
 public:
 
     explicit ManagerClass(const ConfigClass& configLink);
-    [[nodiscard]] uint64_t getLen() const;
 
+    [[nodiscard]] uint64_t getLen() const;
     [[nodiscard]] bool isEnoughMemory() const;
+
     void run() const;
 };
 

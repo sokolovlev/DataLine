@@ -1,6 +1,5 @@
-//
-// Created by Lev on 07.05.2026.
-//
+
+
 
 #ifndef DATALINE_SETLIMIT_H
 #define DATALINE_SETLIMIT_H

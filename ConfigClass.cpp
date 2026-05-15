@@ -1,6 +1,5 @@
-//
-// Created by Lev on 12.05.2026.
-//
+
+
 
 #include "ConfigClass.h"
 

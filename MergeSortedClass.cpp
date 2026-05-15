@@ -1,8 +1,8 @@
-//
-// Created by Lev on 11.05.2026.
-//
+
+
 
 #include "MergeSortedClass.h"
+
 
 MergeSortedClass::MergeSortedClass(const ConfigClass& config)
 
