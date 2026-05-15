@@ -15,27 +15,20 @@
 #include "ConfigClass.h"
 #include "techOps.h"
 
-
 namespace fs = std::filesystem;
 
 class ManagerClass
 {
 private:
     const ConfigClass& config;
-    const fs::path inDir;
     const fs::path inName;
-
     const uint64_t ramLmt;
     const size_t bufSz;
 public:
-
     explicit ManagerClass(const ConfigClass& configLink);
-
     [[nodiscard]] uint64_t getLen() const;
     [[nodiscard]] bool isEnoughMemory() const;
-
     void run() const;
 };
-
 
 #endif //DATALINE_MANAGERCLASS_H

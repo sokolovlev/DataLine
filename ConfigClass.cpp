@@ -19,6 +19,33 @@ ConfigClass::ConfigClass(const std::vector<uint64_t>& params,
 
         , ramLmt(params[4] * 1024 * 1024)
         , bufSz(0)
-{
+        , value(0)
 
+{
+    calcBufSz();
+    maxFileParts();
+}
+
+
+void ConfigClass::calcBufSz()
+{
+    if (ramLmt < techOps::kMin)
+    {
+        std::cout << techOps::kRamTooLow << std::endl;
+        std::cout << ramLmt;
+        exit(1);
+    }
+    else if (ramLmt < techOps::kMid)
+        bufSz = 0.26 * ramLmt  / techOps::kSizeULL;
+    else if (ramLmt < techOps::kHigh)
+        bufSz = 0.45 * ramLmt  / techOps::kSizeULL;
+    else if (ramLmt < techOps::kExtrm)
+        bufSz = 0.56 * ramLmt  / techOps::kSizeULL;
+    else
+        bufSz = 0.68 * ramLmt  / techOps::kSizeULL;
+}
+
+void ConfigClass::maxFileParts()
+{
+    value = ((ramLmt / 1024) - 3072) / (8.3);      // max value of files
 }

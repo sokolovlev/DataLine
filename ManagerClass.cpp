@@ -10,25 +10,19 @@
 ManagerClass::ManagerClass(const ConfigClass& configLink)
 
             : config(configLink)
-            , inDir(config.getInDir())
             , inName(config.getInName())
 
             , ramLmt(config.getRamLmt())
             , bufSz(config.getBufSz())
 
-{
-    setLimit(ramLmt);
-}
+{setLimit(ramLmt);}
 
 uint64_t ManagerClass::getLen() const  // number of data (without delimiters and '\n' symbols)
 {
-    constexpr char delimiter = ',';
-    constexpr size_t unitLen = sizeof(uint64_t);
-
-    std::ifstream file(inDir / inName);
+    std::ifstream file(techOps::inputDir / inName);
     if (!file.is_open())
     {
-        std::cerr << techOps::kFileOpenError << inDir / inName << std::endl;
+        std::cerr << techOps::kFileOpenError << techOps::inputDir / inName << std::endl;
         exit(1);
     }
 
@@ -38,9 +32,9 @@ uint64_t ManagerClass::getLen() const  // number of data (without delimiters and
 
     while (file.get(ch))
     {
-        if (ch == delimiter)
+        if (ch == techOps::kDelimiter)
         {
-            if (len > unitLen)
+            if (len > techOps::kSizeULL)
             {
                 std::cout << techOps::kDataUnitTooBig << std::endl;
                 exit(1);
@@ -58,7 +52,7 @@ uint64_t ManagerClass::getLen() const  // number of data (without delimiters and
 
 bool ManagerClass::isEnoughMemory() const
 {
-    uint64_t value = techOps::maxFileParts(config);   // max value of files
+    uint64_t value = config.getValue();
     uint64_t fileSz = getLen();
     uint64_t maxBufSz = ceil(fileSz / value);
 

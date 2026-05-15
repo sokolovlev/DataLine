@@ -40,9 +40,6 @@ int main()
 
     ConfigClass cfg(tokens,inName,outName);
 
-    size_t bufSz = techOps::calcBufSz(cfg);
-    cfg.setBufSz(bufSz);
-
     ManagerClass manager(cfg);
     manager.run();
 

@@ -7,7 +7,8 @@
 
 #pragma once
 #include <string_view>
-#include "ConfigClass.h"
+#include <cstdint>
+//#include "ConfigClass.h"
 #include <iostream>
 
 
@@ -32,16 +33,19 @@ namespace techOps
     inline constexpr std::string_view kFailed = "task not completed";
 
     //constants
-    constexpr int kMin = 30 * 1024 * 1024;
-    constexpr int kMid = 40 * 1024 * 1024;
-    constexpr int kHigh = 50 * 1024 * 1024;
+    inline constexpr int kMin = 30 * 1024 * 1024;
+    inline constexpr int kMid = 40 * 1024 * 1024;
+    inline constexpr int kHigh = 50 * 1024 * 1024;
 
-    constexpr int kExtrm = 70 * 1024 * 1024;
-    constexpr size_t kSizeULL = sizeof(uint64_t);
+    inline constexpr int kExtrm = 70 * 1024 * 1024;
+    inline constexpr size_t kSizeULL = sizeof(uint64_t);
+    inline constexpr char kDelimiter = ',';
 
-    size_t calcBufSz(const ConfigClass& config);
 
-    uint64_t maxFileParts(const ConfigClass& config);
+    //paths
+    inline constexpr std::string inputDir = "input";
+    inline constexpr std::string techDir = "tech";
+    inline constexpr std::string outputDir = "output";
 
 }
 

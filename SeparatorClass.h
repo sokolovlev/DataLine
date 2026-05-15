@@ -49,9 +49,7 @@ private:
     const chrn::milliseconds WRITE_TIME;
     const chrn::milliseconds MOVE_TIME;
     const chrn::milliseconds LONG_MOVE_TIME;
-
 public:
-
     explicit SeparatorClass(const ConfigClass& config);
     void ctrl();
     void read();

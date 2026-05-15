@@ -14,6 +14,7 @@
 #include <vector>
 #include <queue>
 #include "ConfigClass.h"
+#include "techOps.h"
 
 
 namespace fs = std::filesystem;
@@ -22,10 +23,6 @@ namespace chrn = std::chrono;
 class MergeSortedClass
 {
 private:
-    const fs::path inDir;
-    const fs::path tDir;
-    const fs::path outDir;
-
     const fs::path inName;
     const fs::path outName;
 

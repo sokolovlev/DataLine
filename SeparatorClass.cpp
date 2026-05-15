@@ -6,9 +6,9 @@
 SeparatorClass::SeparatorClass(const ConfigClass& config)
 
             : success(false)
-            , inDir(config.getInDir())
-            , tDir(config.getTDir())
-            , outDir(config.getOutDir())
+            , inDir(techOps::inputDir)
+            , tDir(techOps::techDir)
+            , outDir(techOps::outputDir)
 
             , inName(config.getInName())
             , outName(config.getOutName())
